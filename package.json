@@ -1,0 +1,24 @@
+{
+  "name": "route-builder",
+  "version": "0.0.1",
+  "description": "route-builder",
+  "licence": "MIT",
+  "author": "Andres Suarez <zertosh@gmail.com>",
+  "main": "route-builder.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/zertosh/route-builder.git"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "dependencies": {
+    "path-to-regexp": "^1.0.1"
+  },
+  "devDependencies": {
+    "mocha": "^1.21.4"
+  },
+  "engines": {
+    "node": ">=0.10"
+  }
+}
