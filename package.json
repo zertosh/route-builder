@@ -4,6 +4,10 @@
   "description": "route-builder",
   "licence": "MIT",
   "author": "Andres Suarez <zertosh@gmail.com>",
+  "files": [
+    "README.md",
+    "route-builder.js"
+  ],
   "main": "route-builder.js",
   "repository": {
     "type": "git",
@@ -17,8 +21,5 @@
   },
   "devDependencies": {
     "mocha": "^1.21.4"
-  },
-  "engines": {
-    "node": ">=0.10"
   }
 }
