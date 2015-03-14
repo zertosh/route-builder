@@ -15,18 +15,18 @@ describe('route-builder', function() {
 
   describe('#constructor', function() {
     it('should init correctly without routes', function() {
-      var router = RouteBuilder();
+      var router = new RouteBuilder();
       assert.equal(Object.keys(router._routes).length, 0);
     });
     it('should init correctly with routes', function() {
-      var router = RouteBuilder(TestRoutes);
+      var router = new RouteBuilder(TestRoutes);
       assert.equal(Object.keys(router._routes).length, 4);
     });
   });
 
   describe('#add', function() {
     it('should add routes correctly', function() {
-      var router = RouteBuilder();
+      var router = new RouteBuilder();
       router.add(TestRoutes[0]);
       router.add(TestRoutes[1]);
       assert.equal(Object.keys(router._routes).length, 2);
@@ -35,18 +35,18 @@ describe('route-builder', function() {
 
   describe('#hasMatch', function() {
     it('should match an existing route', function() {
-      var router = RouteBuilder(TestRoutes);
+      var router = new RouteBuilder(TestRoutes);
       assert.ok(router.hasMatch('/post/1232'));
     });
     it('should not match a non-existing route', function() {
-      var router = RouteBuilder(TestRoutes);
+      var router = new RouteBuilder(TestRoutes);
       assert.ok(!router.hasMatch('/post'));
     });
   });
 
   describe('#match', function() {
     it('should match an existing route', function() {
-      var router = RouteBuilder(TestRoutes);
+      var router = new RouteBuilder(TestRoutes);
       var match = router.match('/post/123');
       assert.deepEqual(match, {
         name: match.name,
@@ -55,13 +55,13 @@ describe('route-builder', function() {
       });
     });
     it('should not match a non-existing route', function() {
-      var router = RouteBuilder(TestRoutes);
+      var router = new RouteBuilder(TestRoutes);
       var match = router.match('/post');
       assert.strictEqual(match, null);
     });
     it('should match in the correct order', function() {
       var testRoutes = [ ['catch-all', '/:anything*'] ].concat( TestRoutes );
-      var router = RouteBuilder(testRoutes);
+      var router = new RouteBuilder(testRoutes);
       var match = router.match('/post');
       assert.strictEqual(match.name, 'catch-all');
     });
@@ -69,12 +69,12 @@ describe('route-builder', function() {
 
   describe('#_getRouteByPath', function() {
     it('should match an existing route', function() {
-      var router = RouteBuilder(TestRoutes);
+      var router = new RouteBuilder(TestRoutes);
       var route = router._getRouteByPath('/post/123');
       assert.deepEqual(route, router._routes[1]);
     });
     it('should not match a non-existing route', function() {
-      var router = RouteBuilder(TestRoutes);
+      var router = new RouteBuilder(TestRoutes);
       var route = router._getRouteByPath('/posts');
       assert.equal(route, null);
     });
@@ -82,12 +82,12 @@ describe('route-builder', function() {
 
   describe('#_getRouteByName', function() {
     it('should match an existing route', function() {
-      var router = RouteBuilder(TestRoutes);
+      var router = new RouteBuilder(TestRoutes);
       var route = router._getRouteByName('post');
       assert.deepEqual(route.meta, TestRoutes[1][2]);
     });
     it('should not match a non-existing route', function() {
-      var router = RouteBuilder(TestRoutes);
+      var router = new RouteBuilder(TestRoutes);
       var route = router._getRouteByName('posts');
       assert.equal(route, null);
     });
@@ -95,22 +95,22 @@ describe('route-builder', function() {
 
   describe('#makePath', function() {
     it('should make a path without params', function() {
-      var router = RouteBuilder(TestRoutes);
+      var router = new RouteBuilder(TestRoutes);
       var path = router.makePath('home');
       assert.equal(path, '/');
     });
     it('should make a path with params', function() {
-      var router = RouteBuilder(TestRoutes);
+      var router = new RouteBuilder(TestRoutes);
       var path = router.makePath('post', { id: 123 });
       assert.equal(path, '/post/123');
     });
     it('should not make a path when missing params', function() {
-      var router = RouteBuilder(TestRoutes);
+      var router = new RouteBuilder(TestRoutes);
       var path = router.makePath('post');
       assert.equal(path, null);
     });
     it('should not make a path when path doesn\'t match', function() {
-      var router = RouteBuilder(TestRoutes);
+      var router = new RouteBuilder(TestRoutes);
       var path = router.makePath('posts');
       assert.equal(path, null);
     });

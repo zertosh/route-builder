@@ -12,7 +12,7 @@
   var RouteBuilder = require('route-builder');
 
   // via the constructor
-  var router = RouteBuilder([
+  var router = new RouteBuilder([
     ['home', '/'],
     ['post', '/post/:id', { a: 1, b: 2, c: 3 }],
     ['multi_media', '/:type/*anything/:id']

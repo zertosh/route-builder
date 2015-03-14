@@ -7,9 +7,6 @@ var pathToRegexp = require('path-to-regexp');
  * @constructor
  */
 function RouteBuilder(routes) {
-  if (!(this instanceof RouteBuilder)) {
-    return new RouteBuilder(routes);
-  }
   this._routes = [];
   if (Array.isArray(routes)) {
     routes.forEach(this.add, this);
