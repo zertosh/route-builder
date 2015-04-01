@@ -33,6 +33,30 @@ describe('route-builder', function() {
     });
   });
 
+  describe('#remove', function () {
+    it('should remove a route by name', function () {
+      var router = new RouteBuilder(TestRoutes);
+      router.remove(TestRoutes[1][0]);
+      assert.equal(Object.keys(router._routes).length, TestRoutes.length - 1);
+    });
+    it('should remove multiple routes when passed an array of names', function () {
+      var router = new RouteBuilder(TestRoutes);
+      var removeRoutes = [TestRoutes[1][0], TestRoutes[3][0]];
+      router.remove(removeRoutes);
+      assert.equal(Object.keys(router._routes).length, TestRoutes.length - removeRoutes.length);
+    });
+    it('should not remove a route when passed a non-existant name', function () {
+      var router = new RouteBuilder(TestRoutes);
+      router.remove('NonExistantName');
+      assert.equal(Object.keys(router._routes).length, TestRoutes.length);
+    });
+    it('should remove only items in the names array if they exist', function () {
+      var router = new RouteBuilder(TestRoutes);
+      router.remove([TestRoutes[1][0], 'NonExistantName']);
+      assert.equal(Object.keys(router._routes).length, TestRoutes.length - 1);
+    })
+  });
+
   describe('#hasMatch', function() {
     it('should match an existing route', function() {
       var router = new RouteBuilder(TestRoutes);

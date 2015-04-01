@@ -41,6 +41,20 @@ RouteBuilder.prototype.add = function(name, path, meta) {
   return this;
 };
 
+/**
+ * @param {String|Array} name name(s) of route(s) to remove
+ */
+RouteBuilder.prototype.remove = function (name) {
+  if (typeof name === 'string') {
+    name = [name];
+  } else if (!Array.isArray(name)) {
+    throw new Error('"name" must be specified');
+  }
+
+  this._routes = this._routes.filter(function (route) {
+    return name.indexOf(route.name) === -1;
+  });
+}
 
 /**
  * @param {String} path
