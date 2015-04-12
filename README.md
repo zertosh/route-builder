@@ -1,8 +1,8 @@
 # route-builder
 
-`route-builder` is a simple path matcher and path maker based on [`path-to-regexp`](https://github.com/pillarjs/path-to-regexp) (same as [Express](https://github.com/strongloop/express)). It meant to serve as the foundation for a router.
+`route-builder` is a simple path matcher and path maker based on [`path-to-regexp`](https://github.com/pillarjs/path-to-regexp) (same as [Express](https://github.com/strongloop/express)). It is meant to serve as the foundation for a router.
 
-`route-builder` is borrows on the work of [routr](https://github.com/yahoo/routr) and [reverend](https://github.com/krakenjs/reverend). 
+`route-builder` borrows on the work of [routr](https://github.com/yahoo/routr) and [reverend](https://github.com/krakenjs/reverend). 
 
 ## Usage
 
