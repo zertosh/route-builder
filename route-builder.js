@@ -35,7 +35,8 @@ RouteBuilder.prototype.add = function(name, path, meta) {
     path: path,
     meta: meta,
     regexp: regexp,
-    keys: keys
+    keys: keys,
+    compiler: null
   };
   this._routes.push(route);
   return this;
@@ -122,61 +123,17 @@ RouteBuilder.prototype._getRouteByName = function(name) {
  * @param {Object} [params]
  * @return {?String}
  */
-// Mostly from: https://github.com/krakenjs/reverend/blob/ec4db33/index.js
 RouteBuilder.prototype.makePath = function(name, params) {
   var route = this._getRouteByName(name);
-
-  if (!route) {
+  if (!route) return null;
+  if (!route.compiler) {
+    route.compiler = pathToRegexp.compile(route.path);
+  }
+  try {
+    return route.compiler(params);
+  } catch (err) {
     return null;
   }
-
-  var path = route.path;
-
-  var valid = route.keys.every(function(key) {
-
-    // Enforce required keys having a value.
-    if (!key.optional) {
-      if (!params || params[key.name] === undefined) {
-        return false;
-      }
-    }
-
-    var value = params[key.name];
-
-    // Pattern used in both unnamed (e.g., "/posts/(.*)") and custom match
-    // parameters (e.g., "/posts/:id(\\d+)").
-    var regex = '\\(((?:\\\\.|[^)])*)\\)';
-
-    // A key's `name` will be a String for named parameters, and a Number
-    // for unnamed parameters. This prefixes the base regexp pattern with
-    // the name, and makes the custom-matching part optional (which follows
-    // what path-to-regexp does.)
-    if (typeof key.name === 'string') {
-      regex = '\\:' + key.name + '(?:' + regex + ')?';
-    }
-
-    // Append suffix pattern.
-    regex += '([+*?])?';
-
-    if (key.optional && value === undefined) {
-      // No value so remove potential trailing '/'
-      // since the path segment is optional.
-      value = '';
-      regex += '\\/?';
-    }
-
-    value = encodeURIComponent(value);
-    path = path.replace(new RegExp(regex), value);
-
-    return true;
-  });
-
-  // Make sure the `path` produced will actually be matched by the `route`.
-  if (!valid || !route.regexp.test(path)) {
-    return null;
-  }
-
-  return path;
 };
 
 module.exports = RouteBuilder;
